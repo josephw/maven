@@ -27,6 +27,10 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import javax.inject.Inject;
+import javax.inject.Named;
+import javax.inject.Singleton;
+
 import org.apache.maven.lifecycle.DefaultLifecycles;
 import org.apache.maven.lifecycle.LifeCyclePluginAnalyzer;
 import org.apache.maven.lifecycle.Lifecycle;
@@ -37,8 +41,6 @@ import org.apache.maven.model.InputLocation;
 import org.apache.maven.model.InputSource;
 import org.apache.maven.model.Plugin;
 import org.apache.maven.model.PluginExecution;
-import org.codehaus.plexus.component.annotations.Component;
-import org.codehaus.plexus.component.annotations.Requirement;
 import org.codehaus.plexus.logging.Logger;
 import org.codehaus.plexus.util.StringUtils;
 import org.codehaus.plexus.util.xml.Xpp3Dom;
@@ -52,18 +54,19 @@ import org.codehaus.plexus.util.xml.Xpp3Dom;
  * @author jdcasey
  * @author Kristian Rosenvold (extracted class only)
  */
-@Component( role = LifeCyclePluginAnalyzer.class )
+@Named
+@Singleton
 public class DefaultLifecyclePluginAnalyzer
     implements LifeCyclePluginAnalyzer
 {
 
-    @Requirement( role = LifecycleMapping.class )
+    @Inject
     private Map<String, LifecycleMapping> lifecycleMappings;
 
-    @Requirement
+    @Inject
     private DefaultLifecycles defaultLifeCycles;
 
-    @Requirement
+    @Inject
     private Logger logger;
 
     public DefaultLifecyclePluginAnalyzer()
